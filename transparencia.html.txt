@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CEFCA | Portal de Transparencia</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-2: #f8fbff;
+      --text: #1f2a37;
+      --muted: #5b6677;
+      --line: #d9e2ec;
+      --brand: #0d5cab;
+      --brand-2: #0b7a75;
+      --accent: #f59e0b;
+      --ok: #0f766e;
+      --shadow: 0 14px 34px rgba(20, 33, 61, 0.08);
+      --radius: 18px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #eef4fb 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(244, 247, 251, 0.85);
+      border-bottom: 1px solid rgba(217, 226, 236, 0.8);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: white;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid rgba(217, 226, 236, 0.9);
+      padding: 0;
+    }
+
+    .brand-mark svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+
+    .nav-links a:hover { background: rgba(13, 92, 171, 0.08); color: var(--brand); }
+
+    .hero {
+      padding: 40px 0 18px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(217, 226, 236, 0.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 34px;
+      background: radial-gradient(circle at top right, rgba(13, 92, 171, 0.08), transparent 26%), var(--surface);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(13, 92, 171, 0.08);
+      color: var(--brand);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1, h2, h3, h4 { margin: 0 0 12px; line-height: 1.15; }
+    h1 { font-size: clamp(2rem, 4vw, 3.4rem); margin-top: 16px; }
+    h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); }
+    h3 { font-size: 1.08rem; }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 66ch;
+      margin: 0 auto 24px;
+      text-align: justify;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand), #1570c9);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--brand);
+      border-color: rgba(13, 92, 171, 0.18);
+    }
+
+    .hero-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    .kpi {
+      padding: 16px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      border: 1px solid rgba(13, 92, 171, 0.08);
+    }
+
+    .kpi strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+
+    .kpi span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .info-panel {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      background: linear-gradient(180deg, #0f5ba8 0%, #083d73 100%);
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .info-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -70px auto;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .logo-box {
+      width: 100%;
+      min-height: 200px;
+      border-radius: 18px;
+      border: 1px dashed rgba(255,255,255,0.35);
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.05);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .logo-box svg {
+      max-width: 100%;
+      max-height: 240px;
+      width: auto;
+      height: auto;
+      display: block;
+    }
+
+    .logo-box strong { display: block; font-size: 1.15rem; margin-bottom: 4px; }
+
+    .panel-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .meta-item {
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    section { padding: 20px 0; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-head.centered {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .section-head.centered > div {
+      width: 100%;
+    }
+
+    .section-head p { color: var(--muted); max-width: 74ch; margin: 0; }
+
+    .summary-grid, .authority-grid, .links-grid, .request-grid, .footer-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .summary-grid { grid-template-columns: repeat(3, 1fr); }
+    .authority-grid { grid-template-columns: repeat(3, 1fr); }
+    .links-grid { grid-template-columns: repeat(5, 1fr); }
+    .request-grid { grid-template-columns: 1.2fr 1fr; }
+    .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+
+    .summary-card, .authority-card, .link-card, .request-card, .footer-card {
+      padding: 22px;
+    }
+
+    .summary-card p, .authority-card p, .link-card p, .request-card p, .footer-card p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: rgba(13, 92, 171, 0.08);
+      color: var(--brand);
+    }
+
+    .badge.alt { background: rgba(11, 122, 117, 0.1); color: var(--ok); }
+    .badge.warn { background: rgba(245, 158, 11, 0.16); color: #9a6700; }
+
+    .authority-photo {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(13, 92, 171, 0.12), rgba(11, 122, 117, 0.12));
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: var(--brand);
+      margin-bottom: 14px;
+    }
+
+    .authority-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mini-link {
+      font-size: 0.9rem;
+      color: var(--brand);
+      font-weight: 600;
+    }
+
+    .pill-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .pill-box {
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(217, 226, 236, 0.9);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .pill-box .eyebrow { margin-bottom: 10px; }
+
+    .accordion-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    details {
+      background: var(--surface);
+      border: 1px solid rgba(217, 226, 236, 0.9);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    details[open] { border-color: rgba(13, 92, 171, 0.25); }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      font-weight: 700;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    .summary-title small {
+      display: block;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 5px;
+    }
+
+    .doc-body {
+      padding: 0 20px 20px;
+      color: var(--muted);
+    }
+
+    .doc-body ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .doc-body li { margin-bottom: 8px; }
+
+    .doc-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .doc-actions a {
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(13, 92, 171, 0.08);
+      color: var(--brand);
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+
+    .link-card {
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .request-steps {
+      padding-left: 18px;
+      margin: 14px 0 0;
+      color: var(--muted);
+    }
+
+    .request-steps li { margin-bottom: 10px; }
+
+    .callout {
+      padding: 18px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(13, 92, 171, 0.08), rgba(11, 122, 117, 0.08));
+      border: 1px solid rgba(13, 92, 171, 0.12);
+      margin-top: 16px;
+    }
+
+    footer {
+      margin: 24px 0 40px;
+    }
+
+    .footer-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+      color: var(--muted);
+    }
+
+    .footer-card li { margin-bottom: 8px; }
+
+    .muted-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+
+    .method-wrap {
+      padding: 12px 0 40px;
+    }
+
+    .method-card {
+      padding: 28px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(13, 92, 171, 0.08), rgba(11, 122, 117, 0.08));
+      border: 1px solid rgba(13, 92, 171, 0.14);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .method-card h2 {
+      margin-bottom: 10px;
+    }
+
+    .method-card p {
+      color: var(--muted);
+      max-width: 84ch;
+      margin: 0 auto;
+      text-align: justify;
+    }
+
+    .method-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .method-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      background: white;
+      color: var(--brand);
+      border: 1px solid rgba(13, 92, 171, 0.18);
+      box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .summary-grid,
+      .authority-grid,
+      .links-grid,
+      .request-grid,
+      .footer-grid,
+      .accordion-wrap,
+      .pill-split {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-kpis { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+      .nav { flex-direction: column; align-items: flex-start; }
+      .nav-links { justify-content: flex-start; }
+      .hero-card, .info-panel, .summary-card, .authority-card, .link-card, .request-card, .footer-card { padding: 18px; }
+      .hero-kpis { grid-template-columns: 1fr; }
+      .panel-meta { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1280" aria-label="Logo del CEFCA" role="img"><defs><linearGradient id="bgBlueBrand" x1="20%" y1="15%" x2="80%" y2="85%"><stop offset="0%" stop-color="#0b447a"/><stop offset="100%" stop-color="#073b6e"/></linearGradient><linearGradient id="pinkGradBrand" x1="35%" y1="25%" x2="75%" y2="75%"><stop offset="0%" stop-color="#f07ae8"/><stop offset="100%" stop-color="#ef64d8"/></linearGradient></defs><circle cx="640" cy="640" r="380" fill="url(#bgBlueBrand)" stroke="#1f78c9" stroke-width="2"/><g fill="url(#pinkGradBrand)"><path d="M 625.0 811.5 L 599.0 811.5 L 598.0 810.5 L 590.0 810.5 L 585.0 808.5 L 580.0 808.5 L 572.0 806.5 L 542.0 794.5 L 516.0 777.5 L 495.5 757.0 L 479.5 734.0 L 470.5 715.0 L 470.5 712.0 L 467.5 706.0 L 465.5 695.0 L 463.5 692.0 L 461.5 676.0 L 460.5 675.0 L 460.5 648.0 L 461.5 647.0 L 462.5 633.0 L 467.5 613.0 L 478.5 588.0 L 493.5 565.0 L 516.0 542.5 L 530.0 532.5 L 544.0 524.5 L 546.0 524.5 L 548.0 522.5 L 562.0 516.5 L 565.0 516.5 L 580.0 511.5 L 596.0 509.5 L 597.0 508.5 L 600.0 508.5 L 601.5 510.0 L 601.5 514.0 L 599.5 517.0 L 591.5 542.0 L 589.5 545.0 L 588.5 551.0 L 584.5 559.0 L 568.0 566.5 L 566.0 566.5 L 564.0 568.5 L 562.0 568.5 L 555.0 572.5 L 538.5 586.0 L 529.5 596.0 L 522.5 607.0 L 517.5 617.0 L 514.5 628.0 L 512.5 631.0 L 512.5 635.0 L 509.5 646.0 L 509.5 677.0 L 513.5 694.0 L 525.5 718.0 L 540.0 735.5 L 558.0 749.5 L 574.0 757.5 L 591.0 762.5 L 596.0 762.5 L 603.0 764.5 L 625.0 764.5 L 646.0 759.5 L 656.0 754.5 L 658.0 754.5 L 679.0 740.5 L 699.0 720.5 L 747.0 720.5 L 750.5 723.0 L 745.5 734.0 L 732.5 754.0 L 719.0 768.5 L 701.0 783.5 L 683.0 794.5 L 662.0 803.5 L 635.0 810.5 L 626.0 810.5 Z"/><path d="M 816.0 559.5 L 702.0 559.5 L 701.0 558.5 L 697.0 558.5 L 696.0 559.5 L 695.0 558.5 L 645.0 558.5 L 644.0 559.5 L 640.0 558.5 L 639.0 559.5 L 630.0 559.5 L 626.5 556.0 L 640.5 517.0 L 645.0 510.5 L 823.0 510.5 L 824.0 509.5 L 833.0 509.5 L 834.5 511.0 L 834.5 513.0 L 829.5 528.0 L 827.5 531.0 L 827.5 534.0 L 825.5 537.0 L 819.5 555.0 Z"/><path d="M 577.0 699.5 L 575.5 698.0 L 579.5 688.0 L 580.5 682.0 L 588.5 664.0 L 600.5 628.0 L 605.5 617.0 L 608.0 615.5 L 791.0 615.5 L 792.5 617.0 L 785.5 637.0 L 783.5 640.0 L 783.5 643.0 L 781.5 646.0 L 781.5 649.0 L 779.5 652.0 L 776.5 662.0 L 775.0 664.5 L 771.0 666.5 L 720.0 666.5 L 719.0 665.5 L 621.0 666.5 L 613.0 668.5 L 601.0 674.5 L 593.0 680.5 L 582.5 691.0 L 581.5 694.0 Z"/></g></svg></div>
+        <div>
+          <div>CEFCA</div>
+          <small style="color: var(--muted); font-weight: 500;">Portal de Transparencia</small>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#resumen">Resumen</a>
+        <a href="#autoridades">Autoridades</a>
+        <a href="#activa">Transparencia Activa</a>
+        <a href="#proactiva">Transparencia Proactiva</a>
+        <a href="#enlaces">Enlaces</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <article class="card hero-card">
+          <h1 style="text-align: center;">Portal de Transparencia del CEFCA</h1>
+          <p class="lead">
+            Esta es una página transitoria de transparencia del organismo CEFCA, habilitada para poner a
+            disposición información institucional relevante, documentación de consulta pública y enlaces
+            oficiales mientras se finaliza el desarrollo del sitio web oficial del organismo. En las
+            próximas semanas estará disponible la página institucional definitiva.
+          </p>
+          <div class="hero-kpis">
+            <div class="kpi">
+              <strong>13</strong>
+              <span>Indicadores de transparencia activa</span>
+            </div>
+            <div class="kpi">
+              <strong>7</strong>
+              <span>Indicadores de transparencia proactiva</span>
+            </div>
+            <div class="kpi">
+              <strong>90 / 10</strong>
+              <span>Ponderación ITA / ITP</span>
+            </div>
+            <div class="kpi">
+              <strong>3</strong>
+              <span>Dimensiones: completitud, actualización y disponibilidad</span>
+            </div>
+          </div>
+        </article>
+
+        <aside class="card info-panel">
+          <div>
+            <h2 style="margin-bottom: 8px; text-align: center; font-size: 1.55rem;">Centro de Formación y Capacitación en Administración Pública del Chaco</h2>
+            <p style="margin: 0; color: rgba(255,255,255,0.86); text-align: justify;">
+              Institución dedicada a la capacitación, formación continua, investigación aplicada y desarrollo
+              de capacidades para el fortalecimiento de la gestión pública provincial.
+            </p>
+          </div>
+          <div class="logo-box"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1280" width="1280" height="1280" aria-label="Logo oficial del CEFCA" role="img">
+  <g fill="#ef72ec" fill-rule="evenodd">
+    <path d="M 542 355 L 513 368 L 482 390 L 458 416 L 440 446 L 432 470 L 427 494 L 427 536 L 432 559 L 442 586 L 458 613 L 481 639 L 501 654 L 534 671 L 566 680 L 574 680 L 579 682 L 604 682 L 610 680 L 627 679 L 647 672 L 655 671 L 670 664 L 697 647 L 727 617 L 744 591 L 745 581 L 740 577 L 688 578 L 685 579 L 666 599 L 638 617 L 607 625 L 580 625 L 563 621 L 535 609 L 517 594 L 505 580 L 491 556 L 484 531 L 483 509 L 488 483 L 496 462 L 509 442 L 528 425 L 545 415 L 563 408 L 567 404 L 584 357 L 584 351 L 580 348 Z"/>
+  </g>
+  <g fill="#133550" fill-rule="evenodd">
+    <path d="M 715 885 L 715 896 L 720 908 L 727 913 L 740 916 L 750 914 L 754 911 L 756 911 L 759 914 L 767 914 L 769 912 L 770 905 L 769 893 L 773 889 L 777 889 L 779 891 L 779 910 L 782 914 L 790 914 L 793 910 L 796 910 L 799 913 L 805 915 L 827 914 L 829 912 L 829 902 L 832 901 L 836 910 L 846 915 L 860 914 L 863 912 L 865 908 L 867 908 L 872 913 L 878 915 L 889 915 L 898 911 L 903 901 L 903 892 L 900 884 L 893 879 L 889 878 L 878 878 L 871 881 L 867 885 L 865 885 L 861 879 L 847 878 L 837 882 L 832 890 L 830 890 L 828 884 L 821 879 L 807 878 L 802 879 L 799 882 L 798 886 L 801 892 L 796 897 L 794 897 L 790 882 L 782 878 L 770 879 L 769 868 L 767 866 L 759 866 L 755 869 L 740 866 L 731 867 L 720 874 Z M 504 868 L 504 878 L 501 880 L 500 886 L 504 890 L 504 911 L 506 914 L 515 914 L 517 912 L 519 905 L 521 905 L 523 909 L 528 913 L 534 915 L 545 915 L 552 911 L 555 911 L 562 915 L 587 913 L 588 892 L 587 886 L 583 881 L 576 878 L 564 878 L 558 880 L 556 886 L 560 890 L 560 892 L 554 897 L 553 902 L 547 904 L 539 904 L 533 898 L 534 893 L 539 889 L 549 890 L 552 887 L 552 882 L 545 878 L 534 878 L 527 881 L 522 886 L 521 890 L 518 891 L 516 880 L 518 872 L 517 868 L 515 866 L 506 866 Z M 604 895 L 604 901 L 607 909 L 611 913 L 616 915 L 625 915 L 629 913 L 639 914 L 642 910 L 643 905 L 645 905 L 648 910 L 658 915 L 674 914 L 677 911 L 676 902 L 679 899 L 682 900 L 682 909 L 685 913 L 693 916 L 697 915 L 700 912 L 700 907 L 695 902 L 695 869 L 693 866 L 685 865 L 682 868 L 681 889 L 679 889 L 677 885 L 669 879 L 658 878 L 649 882 L 646 886 L 645 892 L 642 893 L 642 870 L 641 867 L 633 865 L 629 868 L 629 877 L 619 878 L 611 881 L 607 886 Z M 443 866 L 443 913 L 467 915 L 472 913 L 478 906 L 481 906 L 482 910 L 488 915 L 492 916 L 500 912 L 500 907 L 495 902 L 495 871 L 493 866 L 484 865 L 482 867 L 480 888 L 478 888 L 476 884 L 470 879 L 456 878 L 455 869 L 453 866 Z M 428 863 L 419 864 L 415 876 L 413 878 L 404 879 L 401 887 L 399 887 L 393 880 L 388 878 L 365 879 L 363 881 L 363 926 L 365 928 L 375 927 L 377 915 L 387 915 L 394 912 L 398 908 L 400 903 L 403 904 L 403 908 L 405 911 L 412 915 L 437 913 L 438 881 L 434 878 L 426 877 L 430 867 Z M 564 819 L 565 835 L 570 841 L 574 843 L 590 844 L 595 842 L 597 838 L 596 831 L 598 829 L 601 830 L 601 841 L 605 844 L 612 843 L 614 841 L 614 821 L 617 818 L 622 818 L 624 821 L 624 841 L 628 844 L 632 844 L 637 841 L 636 814 L 633 810 L 625 807 L 620 807 L 616 809 L 604 808 L 601 811 L 600 817 L 598 817 L 591 809 L 585 807 L 577 807 L 570 810 L 566 814 Z M 809 840 L 811 843 L 814 844 L 820 843 L 822 841 L 822 821 L 825 818 L 830 818 L 832 820 L 833 842 L 836 844 L 843 843 L 845 840 L 845 818 L 849 817 L 852 823 L 851 839 L 853 843 L 859 844 L 862 843 L 865 839 L 867 839 L 870 843 L 887 844 L 895 840 L 897 836 L 896 826 L 891 822 L 891 820 L 895 816 L 897 816 L 902 821 L 901 834 L 903 839 L 907 843 L 935 843 L 937 841 L 937 822 L 948 815 L 948 810 L 946 808 L 926 808 L 922 810 L 915 806 L 915 803 L 912 799 L 908 799 L 902 802 L 901 807 L 897 811 L 888 807 L 878 807 L 872 809 L 867 815 L 865 815 L 864 810 L 861 808 L 861 806 L 864 803 L 863 796 L 853 795 L 851 797 L 851 803 L 853 807 L 850 808 L 846 814 L 844 814 L 841 810 L 833 807 L 823 809 L 813 808 L 809 811 Z M 805 797 L 803 795 L 794 795 L 791 799 L 793 807 L 788 811 L 787 814 L 785 814 L 781 809 L 777 807 L 770 807 L 766 809 L 759 809 L 755 807 L 746 809 L 734 808 L 732 811 L 732 841 L 734 843 L 742 843 L 744 841 L 745 821 L 748 818 L 751 818 L 753 821 L 752 840 L 756 844 L 763 843 L 765 840 L 765 820 L 767 818 L 770 818 L 773 821 L 773 841 L 777 844 L 784 843 L 786 840 L 786 818 L 789 817 L 793 821 L 793 842 L 797 844 L 803 843 L 805 841 L 805 810 L 803 808 L 806 801 Z M 728 797 L 724 794 L 717 795 L 715 798 L 714 807 L 705 807 L 698 810 L 692 819 L 689 819 L 687 813 L 679 808 L 667 807 L 659 809 L 657 815 L 660 821 L 656 825 L 654 830 L 655 838 L 660 843 L 664 844 L 684 844 L 688 842 L 689 836 L 692 835 L 696 841 L 703 844 L 726 843 L 728 841 Z M 1114 817 L 1109 809 L 1099 807 L 1093 809 L 1079 809 L 1078 817 L 1075 818 L 1069 810 L 1063 807 L 1063 804 L 1066 799 L 1066 794 L 1064 792 L 1058 792 L 1055 794 L 1051 803 L 1051 807 L 1044 810 L 1040 814 L 1039 819 L 1036 820 L 1035 811 L 1032 808 L 1032 806 L 1035 803 L 1035 798 L 1033 795 L 1024 795 L 1021 798 L 1021 803 L 1023 805 L 1022 808 L 1016 810 L 1009 807 L 999 807 L 990 811 L 985 820 L 982 819 L 981 813 L 974 808 L 960 807 L 953 809 L 952 817 L 954 821 L 949 826 L 948 836 L 953 842 L 958 844 L 980 843 L 983 840 L 984 834 L 986 834 L 993 842 L 996 843 L 1014 843 L 1017 841 L 1017 834 L 1014 832 L 1001 832 L 998 828 L 998 823 L 1003 818 L 1019 817 L 1022 820 L 1022 841 L 1024 843 L 1033 843 L 1035 840 L 1035 833 L 1038 832 L 1042 840 L 1051 844 L 1065 843 L 1069 841 L 1075 833 L 1078 834 L 1078 841 L 1080 843 L 1088 844 L 1091 841 L 1091 822 L 1094 818 L 1099 818 L 1101 820 L 1101 841 L 1105 844 L 1111 844 L 1114 839 Z M 546 842 L 546 815 L 544 811 L 535 807 L 525 809 L 514 808 L 511 810 L 511 819 L 508 820 L 504 812 L 495 807 L 499 797 L 499 794 L 497 792 L 492 792 L 488 794 L 484 803 L 484 807 L 477 810 L 472 815 L 470 821 L 467 820 L 467 810 L 465 808 L 467 804 L 467 797 L 465 795 L 455 796 L 455 808 L 430 808 L 423 811 L 419 816 L 418 820 L 415 819 L 414 814 L 409 809 L 402 807 L 392 807 L 386 809 L 384 815 L 388 819 L 388 821 L 382 826 L 381 831 L 379 833 L 374 833 L 372 831 L 372 821 L 379 817 L 379 809 L 372 806 L 371 800 L 365 799 L 360 802 L 359 806 L 355 810 L 353 810 L 350 808 L 350 806 L 353 803 L 353 797 L 351 795 L 342 795 L 340 797 L 340 808 L 333 809 L 328 807 L 319 807 L 309 811 L 305 816 L 304 820 L 301 819 L 299 812 L 295 809 L 288 807 L 275 808 L 271 810 L 270 814 L 274 821 L 269 825 L 265 823 L 264 815 L 262 812 L 252 807 L 246 807 L 242 809 L 231 808 L 228 811 L 227 820 L 224 819 L 223 813 L 218 809 L 212 807 L 198 808 L 194 811 L 194 817 L 197 819 L 197 821 L 191 826 L 189 831 L 183 832 L 168 831 L 164 827 L 163 816 L 169 808 L 176 807 L 186 809 L 189 806 L 189 801 L 185 797 L 169 796 L 161 798 L 155 802 L 152 807 L 149 819 L 150 828 L 153 835 L 162 842 L 169 844 L 185 843 L 189 839 L 191 839 L 196 843 L 208 844 L 212 842 L 222 843 L 224 839 L 227 838 L 228 855 L 229 857 L 236 859 L 239 858 L 241 855 L 241 845 L 243 843 L 256 843 L 264 835 L 266 835 L 271 842 L 276 844 L 298 844 L 301 841 L 303 835 L 305 835 L 310 841 L 317 844 L 333 843 L 336 839 L 336 835 L 334 833 L 321 833 L 317 829 L 317 822 L 322 818 L 338 818 L 340 820 L 340 838 L 343 843 L 351 843 L 353 841 L 355 818 L 359 820 L 359 835 L 361 839 L 368 844 L 376 844 L 381 841 L 390 844 L 410 844 L 415 841 L 416 831 L 418 831 L 421 838 L 428 843 L 447 843 L 450 839 L 449 834 L 433 832 L 431 829 L 431 822 L 435 818 L 449 817 L 454 819 L 454 840 L 456 843 L 465 843 L 467 841 L 468 830 L 471 831 L 474 839 L 480 843 L 499 843 L 505 838 L 508 832 L 511 833 L 511 841 L 513 843 L 522 843 L 523 822 L 527 818 L 532 818 L 534 821 L 534 841 L 536 843 Z M 968 737 L 960 737 L 957 740 L 952 752 L 948 750 L 948 747 L 942 737 L 937 736 L 932 738 L 931 742 L 943 766 L 943 771 L 933 776 L 933 781 L 935 783 L 945 784 L 949 783 L 955 778 L 970 744 L 970 739 Z M 280 742 L 280 756 L 282 762 L 290 770 L 299 773 L 315 772 L 319 769 L 320 765 L 322 765 L 331 772 L 346 773 L 353 769 L 352 760 L 355 756 L 358 757 L 358 770 L 360 772 L 368 772 L 370 770 L 370 751 L 374 747 L 378 747 L 380 749 L 380 768 L 383 772 L 391 772 L 393 770 L 394 747 L 396 747 L 399 750 L 399 764 L 401 769 L 409 773 L 415 773 L 419 771 L 432 772 L 434 770 L 434 752 L 437 748 L 442 747 L 446 748 L 445 759 L 448 767 L 451 770 L 459 773 L 469 773 L 477 770 L 480 767 L 483 760 L 482 746 L 475 738 L 462 736 L 453 738 L 449 741 L 447 741 L 443 737 L 423 737 L 419 739 L 417 737 L 412 736 L 412 731 L 409 728 L 401 730 L 399 732 L 399 735 L 394 740 L 379 736 L 371 738 L 360 737 L 358 739 L 357 747 L 355 747 L 353 743 L 345 737 L 327 738 L 321 746 L 319 761 L 299 761 L 293 753 L 294 742 L 299 737 L 317 737 L 319 735 L 319 729 L 316 726 L 293 726 L 283 734 Z M 500 747 L 500 764 L 508 772 L 533 772 L 536 770 L 537 761 L 539 761 L 546 770 L 554 773 L 565 773 L 572 769 L 572 743 L 565 737 L 549 737 L 543 741 L 539 748 L 537 748 L 536 726 L 533 723 L 526 723 L 523 726 L 522 737 L 509 737 L 502 743 Z M 913 745 L 911 740 L 907 737 L 881 737 L 878 740 L 878 750 L 875 751 L 873 744 L 867 738 L 862 736 L 862 733 L 866 726 L 865 722 L 858 721 L 853 725 L 851 735 L 843 739 L 837 748 L 834 747 L 834 741 L 831 737 L 831 735 L 834 732 L 834 727 L 832 725 L 825 724 L 820 727 L 820 731 L 822 734 L 821 737 L 795 737 L 791 739 L 785 747 L 783 747 L 776 738 L 764 736 L 755 737 L 751 741 L 754 750 L 748 756 L 746 756 L 744 742 L 739 737 L 668 737 L 666 739 L 665 748 L 663 748 L 660 742 L 653 737 L 635 737 L 627 744 L 626 747 L 624 747 L 618 743 L 606 744 L 604 742 L 605 736 L 623 736 L 625 734 L 625 728 L 623 726 L 595 725 L 591 728 L 591 769 L 593 772 L 601 772 L 604 769 L 605 755 L 618 755 L 625 753 L 628 766 L 635 772 L 653 772 L 661 766 L 663 760 L 666 761 L 666 770 L 668 772 L 677 772 L 679 769 L 679 751 L 682 748 L 690 747 L 691 770 L 693 772 L 699 773 L 703 770 L 704 749 L 710 747 L 712 750 L 712 770 L 714 772 L 722 772 L 724 769 L 724 749 L 726 747 L 729 747 L 732 749 L 732 769 L 734 772 L 743 772 L 746 766 L 748 766 L 752 771 L 758 773 L 780 772 L 782 770 L 782 763 L 785 762 L 792 771 L 808 773 L 816 770 L 816 763 L 812 761 L 800 761 L 797 753 L 799 749 L 802 747 L 819 747 L 821 749 L 821 769 L 824 772 L 833 771 L 835 761 L 837 761 L 839 766 L 847 772 L 865 772 L 870 769 L 873 765 L 875 755 L 878 756 L 878 770 L 880 772 L 888 772 L 890 770 L 890 751 L 892 748 L 898 747 L 900 749 L 901 771 L 911 772 L 913 769 Z M 551 561 L 555 562 L 568 545 L 579 535 L 591 528 L 608 523 L 770 523 L 774 519 L 778 509 L 784 488 L 790 474 L 790 466 L 787 464 L 586 465 L 583 467 L 575 491 L 551 555 Z M 607 404 L 610 407 L 816 407 L 820 404 L 833 366 L 836 361 L 837 352 L 835 350 L 829 349 L 628 350 L 623 355 L 623 358 L 607 400 Z"/>
+  </g>
+</svg></div>
+          <div class="panel-meta">
+            <div class="meta-item">
+              <strong>Última actualización</strong>
+              <div>25 de marzo de 2026</div>
+            </div>
+            <div class="meta-item">
+              <strong>Responsable de Transparencia</strong>
+              <div>María Jimena Molina</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="resumen">
+      <div class="container">
+        <div class="section-head centered">
+          <div>
+            <div class="eyebrow">Resumen institucional</div>
+            <h2>Información general del organismo</h2>
+          </div>
+        </div>
+        <div class="summary-grid">
+          <article class="card summary-card">
+            <h3>Datos básicos</h3>
+            <p>
+              Centro de Formación y Capacitación en Administración Pública del Chaco (CEFCA).<br />
+              Domicilio: Frondizi 174, Piso 6, Resistencia, Chaco.<br />
+              Código Postal: 3500.<br />
+              Teléfono: completar.<br />
+              Correo institucional: completar.
+            </p>
+            <div class="badge-row">
+              <span class="badge">Datos de contacto</span>
+              <span class="badge alt">Ubicación</span>
+            </div>
+          </article>
+          <article class="card summary-card">
+            <h3>Misión y objetivos</h3>
+            <p>
+              El CEFCA orienta su accionar al fortalecimiento de las capacidades estatales mediante la
+              formación, evaluación, investigación aplicada y generación de espacios de debate sobre los
+              problemas públicos. Entre sus objetivos se incluyen la capacitación y profesionalización del
+              empleo público, la evaluación del impacto de las capacitaciones, la articulación con
+              universidades para proyectos de investigación y diagnóstico, y la promoción de ámbitos de
+              encuentro que contribuyan a la gobernabilidad democrática.
+            </p>
+            <div class="badge-row">
+              <span class="badge">Formación pública</span>
+              <span class="badge alt">Investigación aplicada</span>
+            </div>
+          </article>
+          <article class="card summary-card">
+            <h3>Solicitud de información</h3>
+            <p>
+              Las solicitudes formales de información pública pueden realizarse a través del portal oficial de
+              acceso a la información pública de la Provincia del Chaco. Asimismo, el organismo dispone de su
+              canal institucional de Instagram para consultas y contacto complementario.
+            </p>
+            <div class="badge-row">
+              <span class="badge">Canales</span>
+              <span class="badge warn">Acceso formal</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="autoridades">
+      <div class="container">
+        <div class="section-head centered">
+          <div>
+            <div class="eyebrow">Autoridades</div>
+            <h2>Funcionarios y designaciones</h2>
+          </div>
+        </div>
+        <div class="authority-grid">
+          <article class="card authority-card">
+            <h3>Livio Gutiérrez</h3>
+            <p>Presidente del CEFCA</p>
+            <div class="authority-links">
+              <a class="mini-link" href="https://mapadelestado.chaco.gob.ar/dependencia/ver/2659" target="_blank" rel="noreferrer">Ver información oficial</a>
+            </div>
+          </article>
+          <article class="card authority-card">
+            <h3>María Jimena Molina</h3>
+            <p>Vocal del CEFCA</p>
+            <div class="authority-links">
+              <a class="mini-link" href="https://mapadelestado.chaco.gob.ar/dependencia/ver/2659" target="_blank" rel="noreferrer">Ver información oficial</a>
+            </div>
+          </article>
+          <article class="card authority-card">
+            <h3>Personal de Gabinete</h3>
+            <p>Las autoridades del organismo no cuentan con personal de gabinete asignado a la jurisdicción CEFCA.</p>
+            <div class="authority-links">
+              <a class="mini-link" href="https://mapadelestado.chaco.gob.ar/dependencia/ver/2659" target="_blank" rel="noreferrer">Ver información oficial</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="metodologia">
+      <div class="container">
+        <div class="pill-split">
+          <article class="pill-box">
+            <div class="eyebrow">Criterio de evaluación</div>
+            <h3>Transparencia activa</h3>
+            <p style="color: var(--muted); margin: 0;">
+              Debe concentrar la publicación obligatoria y sistemática de información institucional,
+              presupuestaria, organizacional y de acceso ciudadano.
+            </p>
+          </article>
+          <article class="pill-box">
+            <div class="eyebrow" style="background: rgba(11,122,117,0.1); color: var(--ok);">Mejora continua</div>
+            <h3>Transparencia proactiva</h3>
+            <p style="color: var(--muted); margin: 0;">
+              Debe mostrar información adicional que fortalezca planificación, integridad, evidencia,
+              resultados y desempeño institucional más allá del mínimo normativo.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="activa">
+      <div class="container">
+        <div class="section-head centered">
+          <div>
+            <div class="eyebrow">ITA</div>
+            <h2>Secciones para Transparencia Activa</h2>
+          </div>
+        </div>
+        <div class="accordion-wrap">
+          <details open>
+            <summary>
+              <div class="summary-title">1. Misión y/u objetivos<small>Publicar misión, objetivos y actualización visible</small></div>
+              <span class="badge">Alta prioridad</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li><strong>Planificar y ejecutar programas de capacitación, especialización, actualización y formación</strong> de los recursos humanos de los organismos públicos, asociados a los lineamientos de modernización y profesionalización del empleo público, potenciando la formación 4.0 y los oficios digitales.</li>
+                <li><strong>Evaluar el impacto de las capacitaciones</strong> de los agentes públicos en su ámbito de desempeño y sus resultados, según objetivos, optimización y calidad en la gestión.</li>
+                <li><strong>Coordinar con universidades metodologías, diseños y ejecución de proyectos de investigación</strong>, diagnóstico del estado y la marcha de la Administración Pública, y propuestas de mejoramiento o fortalecimiento de la gestión gubernamental, de las políticas públicas y de la innovación en los modelos de gestión del Estado.</li>
+                <li><strong>Generar ámbitos de encuentro, reflexión y debate</strong> para la construcción de consensos básicos acerca de los problemas públicos que fortalezcan la gobernabilidad democrática.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://mapadelestado.chaco.gob.ar/dependencia/ver/2659" target="_blank" rel="noreferrer">Ver información oficial</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">2. Servicios y/o trámites<small>Listado, requisitos, procedimientos o aclaración de que no corresponde</small></div>
+              <span class="badge alt">Atención ciudadana</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Las personas y los sectores (público y/o privado) pueden requerir al organismo capacitaciones y procesos de formación continua.</li>
+                <li>Asimismo, pueden solicitar investigaciones, datos estatales, estadísticas y otras tareas vinculadas con la producción y análisis de información.</li>
+                <li>El organismo evalúa este tipo de requerimientos de acuerdo con su pertinencia institucional y capacidades de respuesta.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://gobiernoabierto.chaco.gob.ar/innovacion/cf/" target="_blank" rel="noreferrer">Ver servicios institucionales</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">3. Autoridades y designaciones<small>Nombres, cargos y fuente oficial de consulta</small></div>
+              <span class="badge">Documentos</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li><strong>Livio Gutiérrez</strong>: Presidente del CEFCA.</li>
+                <li><strong>María Jimena Molina</strong>: Vocal del CEFCA.</li>
+                <li>Se deja constancia de que las autoridades del organismo <strong>no cuentan con personal de gabinete asignado a la jurisdicción CEFCA</strong>.</li>
+                <li>Para visualizar mayor información, consultar la fuente oficial del Mapa del Estado.</li>
+              </ul>
+              <div class="doc-actions"><a href="#autoridades">Ir a autoridades</a><a href="https://mapadelestado.chaco.gob.ar/dependencia/ver/2659" target="_blank" rel="noreferrer">Ver información oficial</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">4. Planilla de personal y organigrama<small>Estructura interna, áreas y personal</small></div>
+              <span class="badge warn">Actualización semestral</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Organigrama institucional disponible para consulta pública.</li>
+                <li>La estructura orgánica de la jurisdicción puede visualizarse en el documento oficial publicado por el Mapa del Estado.</li>
+                <li>La planilla de personal podrá incorporarse en esta misma sección cuando se disponga del archivo correspondiente.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://mapadelestado.chaco.gob.ar/files/estructurasPDF/Centro%20de%20Formaci%C3%B3n%20y%20Capacitaci%C3%B3n%20en%20Administraci%C3%B3n%20Publica%20del%20Chaco.pdf" target="_blank" rel="noreferrer">Ver organigrama</a><a href="#">Ver planilla</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">5. Declaraciones juradas<small>Funcionarios a cargo y acceso al portal correspondiente</small></div>
+              <span class="badge">Integridad</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>La información vinculada con las declaraciones juradas patrimoniales de los funcionarios se encuentra disponible en el portal oficial habilitado por la Escribanía General de Gobierno.</li>
+                <li>La consulta debe realizarse a través del sitio institucional específico previsto para ese fin.</li>
+                <li>Para visualizar mayor información, acceder al enlace oficial indicado a continuación.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://escribania.chaco.gob.ar/portal-de-consulta-de-ddjj-patrimoniales/" target="_blank" rel="noreferrer">Ver declaraciones juradas</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">6. Escalas salariales<small>Remuneraciones, bonificaciones y complementos</small></div>
+              <span class="badge">Recursos humanos</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Los nombres del personal del organismo y las escalas salariales correspondientes se encuentran disponibles en el portal oficial de Recursos Humanos del Gobierno Abierto del Chaco.</li>
+                <li>La información puede consultarse en la página institucional destinada a recursos humanos.</li>
+                <li>Para visualizar mayor información, acceder al enlace oficial indicado a continuación.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://gobiernoabierto.chaco.gob.ar/recursos-humanos/" target="_blank" rel="noreferrer">Ver personal y escalas salariales</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">7. Presupuesto<small>Presupuesto vigente y planillas anexas</small></div>
+              <span class="badge alt">Ejercicio fiscal</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>El presupuesto del organismo se encuentra comprendido dentro del presupuesto general aprobado por la Cámara de Diputados de la Provincia del Chaco.</li>
+                <li>El presupuesto correspondiente al ejercicio 2026 puede consultarse en el documento oficial de promulgación de la Ley N.º 4194-F.</li>
+                <li>Para visualizar mayor información, acceder al enlace oficial indicado a continuación.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://hacienda.chaco.gov.ar/uploads/archivos/Decreto%20N%C2%B0%201793-25%20Promulgacion%20Ley%204194-F%20Presupuesto%202026.pdf" target="_blank" rel="noreferrer">Ver presupuesto 2026</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">8. Transferencias<small>Beneficiarios, montos, destino y programa vinculado</small></div>
+              <span class="badge">Ejecución</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Se deja constancia de que el organismo no realiza transferencias a otras jurisdicciones.</li>
+                <li>En consecuencia, este apartado no registra transferencias publicables al momento de la actualización.</li>
+                <li>La presente aclaración se incorpora a fin de dar cumplimiento al criterio de transparencia correspondiente.</li>
+              </ul>
+              <div class="doc-actions"><a href="#">Sin transferencias registradas</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">9. Compras y contrataciones<small>Proveedores, montos, plazos y adjudicación</small></div>
+              <span class="badge warn">Control público</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Toda la información vinculada con compras y contrataciones del organismo se encuentra disponible en el portal oficial de consulta de compras públicas de la Provincia del Chaco.</li>
+                <li>La consulta permite acceder a información sobre procedimientos, proveedores y demás antecedentes publicados en el sistema correspondiente.</li>
+                <li>Para visualizar mayor información, acceder al enlace oficial indicado a continuación.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://app.chaco.gob.ar/proveedores/servlet/com.ecom.wpconsultacompras" target="_blank" rel="noreferrer">Ver compras y contrataciones</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">10. Informes de auditoría y evaluaciones<small>Resultados de control interno o externo</small></div>
+              <span class="badge">Rendición de cuentas</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Se deja constancia de que no se realizaron informes de auditoría ni evaluaciones en el período informado.</li>
+                <li>Mediante esta aclaración, el organismo cumple con informar al ciudadano el estado actual de este apartado.</li>
+                <li>Sin perjuicio de ello, toda compra o contratación del organismo tramita por el proceso reglamentario correspondiente.</li>
+                <li>Asimismo, se aclara que la realización de auditorías y evaluaciones de control depende de organismos de contralor externo y de entes constitucionales ajenos al organismo.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">11. Solicitud de información<small>Requisitos, plazos y canales de contacto</small></div>
+              <span class="badge alt">Acceso a la información</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Las solicitudes formales de información pública del organismo pueden realizarse a través del portal oficial <strong>Solicitar Información Pública</strong>.</li>
+                <li>En dicho sitio se encuentra disponible el instructivo correspondiente para efectuar la presentación.</li>
+                <li>De manera complementaria, el organismo también recibe consultas por su canal oficial de Instagram.</li>
+              </ul>
+              <div class="doc-actions"><a href="#contacto">Ir a la sección</a><a href="https://gobiernoabierto.chaco.gob.ar/transparencia/acceso-informacion/" target="_blank" rel="noreferrer">Solicitar Información Pública</a><a href="https://www.instagram.com/cf.chaco/" target="_blank" rel="noreferrer">Instagram oficial</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">12. Área responsable de transparencia<small>Nombre, cargo, contacto y funciones</small></div>
+              <span class="badge">Responsable institucional</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li><strong>Responsable del Área de Transparencia:</strong> María Jimena Molina.</li>
+                <li>Canal formal para solicitudes: portal oficial de acceso a la información pública.</li>
+                <li>Canal complementario de contacto institucional: Instagram oficial del organismo.</li>
+              </ul>
+              <div class="doc-actions"><a href="#contacto">Ver contacto</a><a href="https://gobiernoabierto.chaco.gob.ar/transparencia/acceso-informacion/" target="_blank" rel="noreferrer">Portal de acceso a la información</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">13. Participación ciudadana<small>Consultas, foros, audiencias o instancias participativas</small></div>
+              <span class="badge warn">Gobierno abierto</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>El 17 de marzo el CEFCA realizó una Jornada de Investigación Aplicada, entre cuyos objetivos se incluyó la escucha de ciudadanos para identificar e implementar soluciones orientadas al desarrollo del Chaco.</li>
+                <li>Asimismo, las personas fueron escuchadas y participaron del Programa Fortaleza dictado por la institución.</li>
+                <li>Estas instancias se incorporan como antecedentes de participación y vinculación con la ciudadanía promovidos por el organismo.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://gobiernoabierto.chaco.gob.ar/innovacion/cf/" target="_blank" rel="noreferrer">Ver actividades institucionales</a></div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="proactiva">
+      <div class="container">
+        <div class="section-head centered">
+          <div>
+            <div class="eyebrow" style="background: rgba(11,122,117,0.1); color: var(--ok);">ITP</div>
+            <h2>Secciones para Transparencia Proactiva</h2>
+          </div>
+        </div>
+        <div class="accordion-wrap">
+          <details open>
+            <summary>
+              <div class="summary-title">1. Dotación óptima de personal<small>Estimación de recursos humanos requeridos</small></div>
+              <span class="badge alt">Planificación</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Cantidad estimada de personal por áreas o funciones.</li>
+                <li>Tipo de contratación y justificación operativa.</li>
+                <li>Documento técnico o cuadro resumen.</li>
+              </ul>
+              <div class="doc-actions"><a href="#">Ver planificación de dotación</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">2. Política de integridad<small>Código de ética, denuncias y prevención de conflictos</small></div>
+              <span class="badge">Integridad pública</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Se deja constancia de que el organismo no cumple actualmente con este requisito en los términos aquí previstos.</li>
+                <li>Este apartado se mantiene incorporado a fin de transparentar el estado actual de desarrollo institucional en la materia.</li>
+                <li>Próximamente se trabajará en acciones orientadas a mejorar este componente.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">3. Planificación estratégica<small>Objetivos, proyectos, indicadores y horizonte temporal</small></div>
+              <span class="badge alt">Gestión</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Plan vigente y documentos asociados.</li>
+                <li>Indicadores de desempeño y metas anuales.</li>
+                <li>Seguimiento periódico.</li>
+              </ul>
+              <div class="doc-actions"><a href="#">Ver plan estratégico</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">4. Datos estadísticos<small>Indicadores, reportes y bases de datos</small></div>
+              <span class="badge">Datos abiertos</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Los datos estadísticos que maneja el organismo se publican y difunden a través del Instagram oficial <strong>Chaco en Datos</strong>.</li>
+                <li>Ese canal funciona como espacio de consulta para visualizaciones, publicaciones e información estadística vinculada al organismo.</li>
+                <li>Para ampliar la información, puede consultarse el perfil oficial indicado a continuación.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://www.instagram.com/chacoendatos_/" target="_blank" rel="noreferrer">Ver estadísticas</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">5. Metas<small>Metas institucionales con seguimiento y plazos</small></div>
+              <span class="badge warn">Monitoreo</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Las metas del organismo vinculadas a las capacitaciones del año en vigencia se encuentran disponibles en el espacio institucional del CEFCA.</li>
+                <li>En ese mismo sitio puede consultarse información sobre actividades de formación realizadas, programadas y en desarrollo.</li>
+                <li>Para visualizar mayor información, acceder al enlace oficial indicado a continuación.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://gobiernoabierto.chaco.gob.ar/innovacion/cf/" target="_blank" rel="noreferrer">Ver metas institucionales</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">6. Informes de gestión<small>Resultados, uso de recursos y desempeño anual</small></div>
+              <span class="badge">Resultados</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>Para visualizar trabajos de investigación del equipo del CEFCA y conocer las capacitaciones realizadas o previstas, puede consultarse el espacio institucional del organismo.</li>
+                <li>Ese sitio reúne información sobre líneas de trabajo, actividades y acciones de formación impulsadas por el CEFCA.</li>
+                <li>Para ampliar la consulta, acceder al enlace oficial indicado a continuación.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://gobiernoabierto.chaco.gob.ar/innovacion/cf/" target="_blank" rel="noreferrer">Ver investigaciones y capacitaciones</a></div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <div class="summary-title">7. Indicador específico del ente<small>Formación pública, investigación aplicada y vinculación institucional</small></div>
+              <span class="badge alt">Específico CEFCA</span>
+            </summary>
+            <div class="doc-body">
+              <ul>
+                <li>En atención a la naturaleza del organismo, el indicador específico del CEFCA se vincula con su capacidad de desarrollar acciones de formación, investigación aplicada y asistencia técnica orientadas al fortalecimiento de la administración pública provincial.</li>
+                <li>Este componente puede observarse en la oferta de capacitaciones vigentes, en las actividades de formación realizadas, en los trabajos de investigación del equipo y en las metas institucionales publicadas para el período en curso.</li>
+                <li>También comprende la articulación con la ciudadanía y con otros actores para relevar demandas, evaluar requerimientos y promover soluciones orientadas al desarrollo del Chaco.</li>
+              </ul>
+              <div class="doc-actions"><a href="https://gobiernoabierto.chaco.gob.ar/innovacion/cf/" target="_blank" rel="noreferrer">Ver acciones institucionales del CEFCA</a></div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="enlaces">
+      <div class="container">
+        <div class="section-head centered">
+          <div>
+            <div class="eyebrow">Enlaces externos</div>
+            <h2>Recursos y portales relacionados</h2>
+          </div>
+        </div>
+        <div class="links-grid">
+          <article class="card link-card">
+            <div>
+              <h3>Gobierno Abierto Chaco</h3>
+              <p>Portal institucional con acceso a transparencia, innovación pública y recursos oficiales vinculados al organismo.</p>
+            </div>
+            <a class="mini-link" href="https://gobiernoabierto.chaco.gob.ar/" target="_blank" rel="noreferrer">Abrir recurso</a>
+          </article>
+          <article class="card link-card">
+            <div>
+              <h3>Mapa del Estado</h3>
+              <p>Consulta de organismos y autoridades provinciales.</p>
+            </div>
+            <a class="mini-link" href="https://mapadelestado.chaco.gob.ar/" target="_blank" rel="noreferrer">Abrir recurso</a>
+          </article>
+          <article class="card link-card">
+            <div>
+              <h3>DDJJ patrimoniales</h3>
+              <p>Portal oficial de consulta de declaraciones juradas.</p>
+            </div>
+            <a class="mini-link" href="https://escribania.chaco.gob.ar/portal-de-consulta-de-ddjj-patrimoniales/" target="_blank" rel="noreferrer">Abrir recurso</a>
+          </article>
+          <article class="card link-card">
+            <div>
+              <h3>Recursos humanos</h3>
+              <p>Escalas y referencias de personal del Gobierno Abierto.</p>
+            </div>
+            <a class="mini-link" href="https://gobiernoabierto.chaco.gob.ar/recursos-humanos/" target="_blank" rel="noreferrer">Abrir recurso</a>
+          </article>
+          <article class="card link-card">
+            <div>
+              <h3>Presupuesto provincial</h3>
+              <p>Normativa y búsqueda pública del presupuesto.</p>
+            </div>
+            <a class="mini-link" href="https://digesto.legislaturachaco.gob.ar/Documentos/Documento/BusquedaPublica" target="_blank" rel="noreferrer">Abrir recurso</a>
+          </article>
+          <article class="card link-card">
+            <div>
+              <h3>Compras públicas</h3>
+              <p>Consulta de proveedores y contrataciones estatales.</p>
+            </div>
+            <a class="mini-link" href="https://app.chaco.gob.ar/proveedores/servlet/com.ecom.wpconsultacompras" target="_blank" rel="noreferrer">Abrir recurso</a>
+          </article>
+          <article class="card link-card">
+            <div>
+              <h3>CEFCA: investigaciones y capacitaciones</h3>
+              <p>Acceso al espacio institucional con trabajos de investigación, capacitaciones y metas vigentes del organismo.</p>
+            </div>
+            <a class="mini-link" href="https://gobiernoabierto.chaco.gob.ar/innovacion/cf/" target="_blank" rel="noreferrer">Abrir recurso</a>
+          </article>
+          <article class="card link-card">
+            <div>
+              <h3>Instagram del CEFCA</h3>
+              <p>Canal oficial del organismo para difusión institucional y consultas.</p>
+            </div>
+            <a class="mini-link" href="https://www.instagram.com/cf.chaco/" target="_blank" rel="noreferrer">Abrir recurso</a>
+          </article>
+          <article class="card link-card">
+            <div>
+              <h3>Instagram Chaco en Datos</h3>
+              <p>Canal oficial para publicaciones y contenidos estadísticos vinculados al organismo.</p>
+            </div>
+            <a class="mini-link" href="https://www.instagram.com/chacoendatos_/" target="_blank" rel="noreferrer">Abrir recurso</a>
+          </article>
+          <article class="card link-card">
+            <div>
+              <h3>Facebook del CEFCA</h3>
+              <p>Canal oficial del organismo para comunicación institucional y novedades.</p>
+            </div>
+            <a class="mini-link" href="https://www.facebook.com/chaco.cf" target="_blank" rel="noreferrer">Abrir recurso</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="container">
+        <div class="section-head centered">
+          <div>
+            <div class="eyebrow">Acceso a la información</div>
+            <h2>Solicitud de información pública y contacto</h2>
+          </div>
+        </div>
+        <div class="request-grid">
+          <article class="card request-card">
+            <h3>Cómo solicitar información</h3>
+            <ol class="request-steps">
+              <li>Para consultas generales, escribir al Instagram oficial o al Facebook oficial del organismo.</li>
+              <li>También puede realizarse la consulta o presentación en el domicilio institucional: Frondizi 174, Piso 6, Resistencia, Chaco.</li>
+              <li>Para solicitudes formales de información pública, utilizar el portal oficial de Gobierno Abierto habilitado para ese fin.</li>
+              <li>Se recomienda consignar claramente la información requerida y un medio de contacto para recibir respuesta.</li>
+            </ol>
+            <div class="callout">
+              <strong>Plazo orientativo</strong>
+              <p style="margin: 6px 0 0; color: var(--muted);">
+                En caso de solicitud formal mediante el portal de Gobierno Abierto, el plazo orientativo de
+                respuesta es de 15 días corridos.
+              </p>
+            </div>
+          </article>
+          <article class="card request-card">
+            <h3>Responsable de transparencia</h3>
+            <p>
+              Nombre y apellido: María Jimena Molina.<br />
+              Cargo: Responsable del Área de Transparencia.<br />
+              Canal formal de solicitud: portal Solicitar Información Pública.<br />
+              Canal institucional complementario: Instagram oficial del organismo.<br />
+              Domicilio: Frondizi 174, Piso 6, Resistencia, Chaco.<br />
+              Código Postal: 3500.<br />
+              Horario de atención: 7:00 a 14:00.
+            </p>
+            <div class="badge-row">
+              <span class="badge">Contacto directo</span>
+              <span class="badge alt">Área responsable</span>
+            </div>
+            <p class="muted-note">
+              Las solicitudes formales pueden canalizarse a través de
+              <a href="https://gobiernoabierto.chaco.gob.ar/transparencia/acceso-informacion/" target="_blank" rel="noreferrer">Solicitar Información Pública</a>.
+              Para consultas por Instagram, se encuentra disponible el perfil oficial
+              <a href="https://www.instagram.com/cf.chaco/" target="_blank" rel="noreferrer">@cf.chaco</a>.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+      <section class="method-wrap">
+      <div class="container">
+        <article class="method-card">
+          <div class="eyebrow">Documento metodológico</div>
+          <h2>Metodología del Índice de Transparencia del Chaco</h2>
+          <p>
+            El documento metodológico del Índice de Transparencia del Chaco fue elaborado en el ámbito del
+            CEFCA, tomando como referencia y adaptación la metodología desarrollada por la Agencia de Acceso
+            a la Información Pública. Se deja este material a disposición de la ciudadanía como instrumento de
+            consulta, seguimiento y fortalecimiento de la transparencia institucional. Toda consulta,
+            observación o sugerencia de mejora será bienvenida y podrá canalizarse a través de los medios de
+            contacto institucionales publicados en este portal.
+          </p>
+          <div class="method-actions">
+            <a href="https://doi.org/10.13140/RG.2.2.18103.23206" target="_blank" rel="noreferrer">Consultar metodología publicada</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  
+</body>
+</html>
